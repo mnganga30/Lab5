@@ -14,13 +14,16 @@ if ($conn->connect_errno) {
     exit();
 }
 
-function addUser()
+function addPost()
 {
-  $newName = $_POST['addingName'];
+  $authorName = $_POST['addingName'];
+  $textContent = $_POST['addingName'];
+
+
 
   $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
 
-$sql = "INSERT INTO Users (userid) VALUES ('$newName')";
+$sql = "INSERT INTO Posts (content, author_id) VALUES ('$textContent', '$author_id')";
 
 if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";
@@ -29,9 +32,11 @@ if (mysqli_query($conn, $sql)) {
 }
 }
 
-$sql = "SELECT userid FROM Users";
+//$sql = "SELECT post_id, content, author  FROM Posts";
+$sql = "SELECT user_id  FROM Users";
 
 $result = $conn->query($sql);
+// $checker = $conn->query($list);
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -39,15 +44,12 @@ if ($result->num_rows > 0) {
       //  echo "   Name " . $row["userid"]. "<br>";
       if($row["userid"] == $newName)
       {
-        echo "Name already exists";
-      }
-      else {
-        addUser();
+        addPost();
       }
     }
 } else {
-  addUser();
-    echo "0 results";
+
+    echo "Currently no users Are in table";
 }
 
 
@@ -57,5 +59,5 @@ mysqli_close($conn);
 $mysqli->close();
 
 
-addUser();
+addPost();
 ?>
