@@ -1,0 +1,73 @@
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+
+<style>
+
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+  <form action="DeletePost.php" id="admin">
+
+<table>
+  <tr>
+    <th>Check Mark</th>
+    <th>Post ID</th>
+    <th>Author</th>
+    <th>Post</th>
+  </tr>
+
+  <?php
+  $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
+   if ($conn->connect_errno) {printf("Connect failed: %s\n", $conn->connect_error);
+   exit();}
+   $sql = "SELECT Users.user_id, Posts.author_id, Posts.post_id,Posts.content  FROM Users INNER JOIN Posts ON Posts.author_id=Users.user_id ORDER BY Users.user_id;
+";
+   $result = $conn->query($sql);
+
+   if ($result->num_rows > 0) {
+       while($row = $result->fetch_assoc()) {
+         $name =$row['user_id'];
+         $postid = $row['post_id'];
+
+         $check= "checkbox";
+         $co ='"';
+         $del ="del";
+         $value =$row['content'];
+         echo"<tr>";
+           echo"<td>";
+         echo "<input type=";
+         echo $co. $check. $co;
+         echo"name=";
+         echo $co. $del;
+          echo"[]". $co;
+         echo "value=";
+         echo $co. $postid. $co;
+
+         echo">";
+         echo"</td>";
+           echo"<td>";
+             echo $postid;
+              echo"</td>";
+              echo"<td>";
+                echo $name;
+                 echo"</td>";
+                 echo"<td>";
+                   echo $value;
+                    echo"</td>";
+          echo"</tr>";
+       }
+   }
+   else {echo "Nothing to show empty Tables";}
+   mysqli_close($conn);
+  ?>
+
+
+</table>
+<button formaction="DeletePost.php" type="Delete select boxes">"Delete select boxes</button>
+</form>
+</body>
+</html>

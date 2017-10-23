@@ -4,8 +4,7 @@
 Here's an example of connecting, checking connection, querying, and displaying the results from the database using mysqli: -->
 
 <?php
-$authorName = $_POST['author'];
-$exists = false;
+
 $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
 
 /* check connection */
@@ -14,54 +13,25 @@ if ($conn->connect_errno) {
     exit();
 }
 
-function addPost()
-{
-  $authorName = $_POST['author'];
-  $textContent = $_POST['post'];
-
-
-
-  $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
-
-$sql = "INSERT INTO Posts (content, author_id) VALUES ('$textContent', '$authorName')";
-
-if (mysqli_query($conn, $sql)) {
-    echo "New Post created successfully";
-    endbtn();
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    endbtn();
-}
-}
 
 //$sql = "SELECT post_id, content, author  FROM Posts";
 $sql = "SELECT user_id  FROM Users";
 
 $result = $conn->query($sql);
-// $checker = $conn->query($list);
-
 if ($result->num_rows > 0) {
     // output data of each row
-    do {
-      //  echo "   Name " . $row["user_id"]. "<br>";
-                $test = $row["user_id"];
-      if($test == $authorName)
-      {
-      $exists = true;
-      }
-    }while($row = $result->fetch_assoc());
+    echo "<html><table>";
+    while($row = $result->fetch_assoc()) {
 
-      if($exists == true)
-      {
-        addPost();
-
-      }else {
-        echo "User doesn't exist exists";
-      }
-
-
+      echo "<tr><td>";
+      echo$row['user_id'];
+      echo" </tr></td>";
+    }
+echo "</table></html>";
+endbtn();
 } else {
     echo "0 are in the table!!!!";
+    endbtn();
 }
 
 
@@ -94,7 +64,4 @@ echo'<button  formaction="AdminHome.html">Admin Page</button>';
 echo"</form></body></html>";
 }
 endbtn();
-addPost();
-
-
 ?>

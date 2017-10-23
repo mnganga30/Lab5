@@ -4,7 +4,7 @@
 Here's an example of connecting, checking connection, querying, and displaying the results from the database using mysqli: -->
 
 <?php
-$newName = $_POST['addingName'];
+$name = $_GET['users'];
 
 $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
 
@@ -14,58 +14,38 @@ if ($conn->connect_errno) {
     exit();
 }
 
-function addUser()
-{
-  $newName = $_POST['addingName'];
-$exists =false;
-  $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
 
-$sql = "INSERT INTO Users (user_id) VALUES ('$newName')";
 
-if (mysqli_query($conn, $sql)) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
-}
-
-$sql = "SELECT user_id FROM Users";
-
+$sql = "SELECT post_id, content, author_id FROM Posts WHERE author_id='$name'";
 $result = $conn->query($sql);
 
+
+
 if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-      //  echo "   Name " . $row["user_id"]. "<br>";
-      if($row["user_id"] == $newName)
-      {
-      $exists = true;
-      }
-    }
-
-      if($exists == true)
-      {
-        echo "Name already exists";
-        endbtn();
-      }else {
-        addUser();
-        endbtn();
-      }
-
+    //output data of each row
+    echo "Number Of Total Posts         ";
+    echo $result->num_rows;
+    echo"<br>Author:  ";
+   echo $name;
+   echo"<br>";
+  while($row = $result->fetch_assoc()) {
+       //echo "   Name " . $row["user_id"]. "<br>";
+echo "Post ID: ";
+     echo $row["post_id"];
+     echo"<br>";
+     echo"<textarea rows=4 cols=50 readonly>";
+     echo $row["content"];
+     echo "</textarea>";
+     echo"<br>";
+  }
 
 } else {
-  addUser();
-    echo "0 results";
-    endbtn();
+
+    echo "User Exists but NO posts are made by the user";
 }
 
 
 mysqli_close($conn);
-
-/* close connection */
-$mysqli->close();
-function endbtn()
-{
 echo"<html>";
 echo "<style> form {}
 button {
@@ -83,11 +63,10 @@ button {
 
 button:hover {opacity: 0.8;}</style><body><form>";
 echo'<br><button  formaction="lab5.html">ALL Return to lab5</button>';
-echo'<button  formaction="createUser.html">Create New User</button>';
+echo'<button  formaction="CreateUser.html">Create New User</button>';
 echo'<button  formaction="createPosts.html">Post Page</button>';
 echo'<button  formaction="AdminHome.html">Admin Page</button>';
 echo"</form></body></html>";
-}
-endbtn();
-addUser();
+/* close connection */
+$mysqli->close();
 ?>

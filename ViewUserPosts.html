@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+   <link rel="stylesheet" href="style.css">
+<body>
+  <form action="ViewUserPosts.php" id="admin">
+<select name="users">
+
+  <?php
+ $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
+   if ($conn->connect_errno) {printf("Connect failed: %s\n", $conn->connect_error);
+   exit();}
+   $sql = "SELECT user_id  FROM Users";
+   $result = $conn->query($sql);
+
+   if ($result->num_rows > 0) {
+       while($row = $result->fetch_assoc()) {
+         $name =$row['user_id'];
+         $value ='"';
+         echo "<option value=";
+         echo $value. $name.  $value;
+         echo">";
+           echo $name;
+         echo"</option>";
+       }
+   }
+   else {echo "<option value=0 >0 are in the table!!!!</option>";}
+   mysqli_close($conn);
+  ?>
+</select>
+
+<button formaction="ViewUserPosts.php" type="submit">ALL Posts for User</button>
+</form>
+</body>
+</html>

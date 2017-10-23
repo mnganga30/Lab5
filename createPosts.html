@@ -6,7 +6,7 @@
  </head>
 
 <body>
-<h2 style="text-align:center;">Create a New User </h2>
+<h2 style="text-align:center;">Create a New Post </h2>
 <form action="CreateUser.php" method="post" id="addUser">
   <div class ="con">
     <center>
@@ -15,13 +15,11 @@
   </div>
   <div >
     <label><b> Name</b></label>
-    <input placeholder="Enter Name" name ="addingName" id="addingName" required>
+    <input placeholder="Enter Name" name ="author" id="addingName" required>
   </div>
 <div >
-  <textarea rows="4" cols="50" placeholder="Post Here" name ="post" id="blankpost" required>
-
-</textarea>
-    <button formaction="CreateUser.php" type="submit">Post</button>
+  <textarea rows="4" cols="50" placeholder="Post Here" name ="post" id="blankpost" required></textarea>
+    <button formaction="CreatePosts.php" type="submit">Post</button>
 </div>
   </div>
 </center>
