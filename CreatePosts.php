@@ -20,7 +20,7 @@ function addUser()
 
   $conn = new mysqli("mysql.eecs.ku.edu", "mnganga", "Za64v1sv", "mnganga");
 
-$sql = "INSERT INTO Users (user_id) VALUES ('$newName')";
+$sql = "INSERT INTO Users (userid) VALUES ('$newName')";
 
 if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";
@@ -29,15 +29,15 @@ if (mysqli_query($conn, $sql)) {
 }
 }
 
-$sql = "SELECT user_id FROM Users";
+$sql = "SELECT userid FROM Users";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-      //  echo "   Name " . $row["user_id"]. "<br>";
-      if($row["user_id"] == $newName)
+      //  echo "   Name " . $row["userid"]. "<br>";
+      if($row["userid"] == $newName)
       {
         echo "Name already exists";
       }
